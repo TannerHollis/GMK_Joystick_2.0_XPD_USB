@@ -166,7 +166,6 @@ int main(void)
 	  switch(event_state[event_index_read]){
 		case EVENT_WAIT:
 			controller.buttons.a = HAL_GPIO_ReadPin(BUTTON0_GPIO_Port, BUTTON0_Pin);
-			controller.buttons.lth = HAL_GPIO_ReadPin(BUTTONJYSTK_GPIO_Port, BUTTONJYSTK_Pin);
 			break;
 		case TIM_EVENT_1:
 			HAL_ADC_Start_DMA(&hadc, (uint32_t *)adc_buffer, 2); //Trigger Joystick ADC read
@@ -454,11 +453,11 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
-  /*Configure GPIO pins : BUTTON0_Pin BUTTONJYSTK_Pin */
-  GPIO_InitStruct.Pin = BUTTON0_Pin|BUTTONJYSTK_Pin;
+  /*Configure GPIO pin : BUTTON0_Pin */
+  GPIO_InitStruct.Pin = BUTTON0_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(BUTTON0_GPIO_Port, &GPIO_InitStruct);
 
 }
 

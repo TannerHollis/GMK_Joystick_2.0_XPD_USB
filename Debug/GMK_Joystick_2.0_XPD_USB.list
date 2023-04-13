@@ -7,23 +7,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00006e14  0800013c  0800013c  0001013c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       0000010c  08006f50  08006f50  00016f50  2**2
+  2 .rodata       00000110  08006f50  08006f50  00016f50  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  0800705c  0800705c  00020064  2**0
+  3 .ARM.extab    00000000  08007060  08007060  00020064  2**0
                   CONTENTS
-  4 .ARM          00000008  0800705c  0800705c  0001705c  2**2
+  4 .ARM          00000008  08007060  08007060  00017060  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  08007064  08007064  00020064  2**0
+  5 .preinit_array 00000000  08007068  08007068  00020064  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08007064  08007064  00017064  2**2
+  6 .init_array   00000004  08007068  08007068  00017068  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08007068  08007068  00017068  2**2
+  7 .fini_array   00000004  0800706c  0800706c  0001706c  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000064  20000000  0800706c  00020000  2**2
+  8 .data         00000064  20000000  08007070  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000718  20000064  080070d0  00020064  2**2
+  9 .bss          00000718  20000064  080070d4  00020064  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  2000077c  080070d0  0002077c  2**0
+ 10 ._user_heap_stack 00000604  2000077c  080070d4  0002077c  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020064  2**0
                   CONTENTS, READONLY
@@ -1083,7 +1083,7 @@ void HAL_USBD_Setup(void)
  8000bda:	46bd      	mov	sp, r7
  8000bdc:	bc80      	pop	{r7}
  8000bde:	4770      	bx	lr
- 8000be0:	08007004 	.word	0x08007004
+ 8000be0:	08007008 	.word	0x08007008
  8000be4:	08000ab9 	.word	0x08000ab9
  8000be8:	08000b89 	.word	0x08000b89
 
@@ -1107,7 +1107,7 @@ void USB_HP_IRQHandler(void)
  8000bfa:	bf00      	nop
  8000bfc:	bd80      	pop	{r7, pc}
  8000bfe:	bf00      	nop
- 8000c00:	08007004 	.word	0x08007004
+ 8000c00:	08007008 	.word	0x08007008
 
 08000c04 <USB_LP_IRQHandler>:
 
@@ -1126,7 +1126,7 @@ void USB_LP_IRQHandler(void)
  8000c12:	bf00      	nop
  8000c14:	bd80      	pop	{r7, pc}
  8000c16:	bf00      	nop
- 8000c18:	08007004 	.word	0x08007004
+ 8000c18:	08007008 	.word	0x08007008
 
 08000c1c <main>:
 /**
@@ -2915,9 +2915,9 @@ void UsbDevice_Init(void)
  8001600:	bf00      	nop
  8001602:	bd80      	pop	{r7, pc}
  8001604:	2000052c 	.word	0x2000052c
- 8001608:	08006fc8 	.word	0x08006fc8
+ 8001608:	08006fcc 	.word	0x08006fcc
  800160c:	20000544 	.word	0x20000544
- 8001610:	08006fe8 	.word	0x08006fe8
+ 8001610:	08006fec 	.word	0x08006fec
 
 08001614 <Get_SerialNum>:
 {
@@ -3105,7 +3105,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  80016e8:	20000064 	.word	0x20000064
   ldr r2, =_sidata
- 80016ec:	0800706c 	.word	0x0800706c
+ 80016ec:	08007070 	.word	0x08007070
   ldr r2, =_sbss
  80016f0:	20000064 	.word	0x20000064
   ldr r4, =_ebss
@@ -8384,7 +8384,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
  80034e0:	e019      	b.n	8003516 <HAL_RCC_OscConfig+0x506>
  80034e2:	bf00      	nop
  80034e4:	40023800 	.word	0x40023800
- 80034e8:	08006fd8 	.word	0x08006fd8
+ 80034e8:	08006fdc 	.word	0x08006fdc
  80034ec:	20000058 	.word	0x20000058
  80034f0:	2000005c 	.word	0x2000005c
  80034f4:	42470020 	.word	0x42470020
@@ -9096,7 +9096,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  80038c2:	bf00      	nop
  80038c4:	40023c00 	.word	0x40023c00
  80038c8:	40023800 	.word	0x40023800
- 80038cc:	08006fd8 	.word	0x08006fd8
+ 80038cc:	08006fdc 	.word	0x08006fdc
  80038d0:	20000058 	.word	0x20000058
  80038d4:	2000005c 	.word	0x2000005c
 
@@ -9346,7 +9346,7 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  8003ac8:	40023800 	.word	0x40023800
  8003acc:	00f42400 	.word	0x00f42400
  8003ad0:	007a1200 	.word	0x007a1200
- 8003ad4:	08006fcc 	.word	0x08006fcc
+ 8003ad4:	08006fd0 	.word	0x08006fd0
 
 08003ad8 <RCC_SetFlashLatencyFromMSIRange>:
             voltage range
@@ -12110,7 +12110,7 @@ static uint16_t hid_getDesc(USBD_HID_IfHandleType *itf, uint8_t ifNum, uint8_t *
  80049aa:	46bd      	mov	sp, r7
  80049ac:	bdb0      	pop	{r4, r5, r7, pc}
  80049ae:	bf00      	nop
- 80049b0:	08007008 	.word	0x08007008
+ 80049b0:	0800700c 	.word	0x0800700c
 
 080049b4 <hid_getString>:
  * @param itf: reference of the HID interface
@@ -12536,7 +12536,7 @@ static USBD_ReturnType hid_setupStage(USBD_HID_IfHandleType *itf)
  8004c2a:	46bd      	mov	sp, r7
  8004c2c:	bd80      	pop	{r7, pc}
  8004c2e:	bf00      	nop
- 8004c30:	08007008 	.word	0x08007008
+ 8004c30:	0800700c 	.word	0x0800700c
 
 08004c34 <hid_dataStage>:
 /**
@@ -12746,7 +12746,7 @@ USBD_ReturnType USBD_HID_MountInterface(USBD_HID_IfHandleType *itf, USBD_HandleT
  8004d52:	3710      	adds	r7, #16
  8004d54:	46bd      	mov	sp, r7
  8004d56:	bd80      	pop	{r7, pc}
- 8004d58:	0800701c 	.word	0x0800701c
+ 8004d58:	08007020 	.word	0x08007020
 
 08004d5c <USBD_HID_ReportIn>:
  * @param data: pointer to the data to send
@@ -13969,7 +13969,7 @@ static uint16_t USBD_DeviceDesc(USBD_HandleType *dev, uint8_t *data)
  80053e2:	bcb0      	pop	{r4, r5, r7}
  80053e4:	4770      	bx	lr
  80053e6:	bf00      	nop
- 80053e8:	08007040 	.word	0x08007040
+ 80053e8:	08007044 	.word	0x08007044
 
 080053ec <USBD_ConfigDesc>:
  * @param dev: USB Device handle reference
@@ -14397,7 +14397,7 @@ USBD_ReturnType USBD_GetDescriptor(USBD_HandleType *dev)
  800565a:	46bd      	mov	sp, r7
  800565c:	bd80      	pop	{r7, pc}
  800565e:	bf00      	nop
- 8005660:	0800703c 	.word	0x0800703c
+ 8005660:	08007040 	.word	0x08007040
 
 08005664 <USBD_EpDesc>:
  * @param epAddr: endpoint address
@@ -16689,7 +16689,7 @@ void USB_vEpOpen(
  8006458:	e040      	b.n	80064dc <USB_vEpOpen+0x348>
  800645a:	bf00      	nop
  800645c:	40005c00 	.word	0x40005c00
- 8006460:	08007054 	.word	0x08007054
+ 8006460:	08007058 	.word	0x08007058
  8006464:	ffff8080 	.word	0xffff8080
  8006468:	ffff8180 	.word	0xffff8180
  800646c:	ffffc080 	.word	0xffffc080
@@ -18259,10 +18259,10 @@ __weak void USB_vAllocateEPs(USB_HandleType * pxUSB)
  8006f12:	4798      	blx	r3
  8006f14:	3601      	adds	r6, #1
  8006f16:	e7f2      	b.n	8006efe <__libc_init_array+0x1e>
- 8006f18:	08007064 	.word	0x08007064
- 8006f1c:	08007064 	.word	0x08007064
- 8006f20:	08007064 	.word	0x08007064
- 8006f24:	08007068 	.word	0x08007068
+ 8006f18:	08007068 	.word	0x08007068
+ 8006f1c:	08007068 	.word	0x08007068
+ 8006f20:	08007068 	.word	0x08007068
+ 8006f24:	0800706c 	.word	0x0800706c
 
 08006f28 <memset>:
  8006f28:	4603      	mov	r3, r0
