@@ -70,6 +70,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define BUTTON0_Pin GPIO_PIN_2
 #define BUTTON0_GPIO_Port GPIOA
+#define BUTTONJYSTK_Pin GPIO_PIN_3
+#define BUTTONJYSTK_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

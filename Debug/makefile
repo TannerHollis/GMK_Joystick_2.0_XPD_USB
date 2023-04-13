@@ -42,34 +42,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := GMK_Joystick_2.0_XPD_USB
+BUILD_ARTIFACT_NAME := GMK_Joystick_2.0_XPD_USB_L3
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-GMK_Joystick_2.0_XPD_USB.elf \
+GMK_Joystick_2.0_XPD_USB_L3.elf \
 
 MAP_FILES += \
-GMK_Joystick_2.0_XPD_USB.map \
+GMK_Joystick_2.0_XPD_USB_L3.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-GMK_Joystick_2.0_XPD_USB.list \
+GMK_Joystick_2.0_XPD_USB_L3.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: GMK_Joystick_2.0_XPD_USB.elf secondary-outputs
+main-build: GMK_Joystick_2.0_XPD_USB_L3.elf secondary-outputs
 
 # Tool invocations
-GMK_Joystick_2.0_XPD_USB.elf GMK_Joystick_2.0_XPD_USB.map: $(OBJS) $(USER_OBJS) C:\Users\tanne\STM32CubeIDE\workspace_1.11.0\GMK_Joystick_2.0_XPD_USB\STM32L151C8TXA_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "GMK_Joystick_2.0_XPD_USB.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\tanne\STM32CubeIDE\workspace_1.11.0\GMK_Joystick_2.0_XPD_USB\STM32L151C8TXA_FLASH.ld" --specs=nosys.specs -Wl,-Map="GMK_Joystick_2.0_XPD_USB.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+GMK_Joystick_2.0_XPD_USB_L3.elf GMK_Joystick_2.0_XPD_USB_L3.map: $(OBJS) $(USER_OBJS) C:\Users\tanne\STM32CubeIDE\workspace_1.11.0\GMK_Joystick_2.0_XPD_USB_L3\STM32L151C8TXA_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "GMK_Joystick_2.0_XPD_USB_L3.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\tanne\STM32CubeIDE\workspace_1.11.0\GMK_Joystick_2.0_XPD_USB_L3\STM32L151C8TXA_FLASH.ld" --specs=nosys.specs -Wl,-Map="GMK_Joystick_2.0_XPD_USB_L3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -78,14 +78,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-GMK_Joystick_2.0_XPD_USB.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "GMK_Joystick_2.0_XPD_USB.list"
+GMK_Joystick_2.0_XPD_USB_L3.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "GMK_Joystick_2.0_XPD_USB_L3.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) GMK_Joystick_2.0_XPD_USB.elf GMK_Joystick_2.0_XPD_USB.list GMK_Joystick_2.0_XPD_USB.map default.size.stdout
+	-$(RM) GMK_Joystick_2.0_XPD_USB_L3.elf GMK_Joystick_2.0_XPD_USB_L3.list GMK_Joystick_2.0_XPD_USB_L3.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
