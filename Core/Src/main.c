@@ -22,9 +22,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "usb_device.h"
-#include "usbd_hid.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,6 +70,11 @@ uint16_t adc_buffer[2];
 
 Joystick_HandleTypeDef joystick;
 Controller_HandleTypeDef controller;
+AverageWeightedFilter_TypeDef avgFilterInstanceXAxis;
+AverageWeightedFilter_TypeDef avgFilterInstanceYAxis;
+
+MeanFilter_TypeDef meanFilterInstanceXAxis;
+MeanFilter_TypeDef meanFilterInstanceYAxis;
 
 static struct {
 	uint8_t report_id;
@@ -96,7 +98,7 @@ static void MX_USB_PCD_Init(void);
 
 void write_next_event_state(State_TypeDef next_state);
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
-
+void DataFiltersInitialization();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -138,6 +140,8 @@ int main(void)
   MX_USB_PCD_Init();
   /* USER CODE BEGIN 2 */
 
+  DataFiltersInitialization();
+
   HAL_USBD_Setup();
   UsbDevice_Init();
 
@@ -146,7 +150,12 @@ int main(void)
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_2);
 
-  joystick = Joystick_Init(&adc_buffer[0], &adc_buffer[1]);
+  AverageWeightedFilter_TypeDef* pointerFilterInstanceAxisX = &avgFilterInstanceXAxis;
+  AverageWeightedFilter_TypeDef* pointerFilterInstanceAxisY = &avgFilterInstanceYAxis;
+
+  joystick = Joystick_Init(
+		  &pointerFilterInstanceAxisX->FilteredValue,
+		  &pointerFilterInstanceAxisY->FilteredValue);
 
   failed_tx = 0;
   failed_tx_max = 0;
@@ -157,36 +166,70 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  for(uint8_t i = 0; i < EVENT_BUFFER_LENGTH; i++){
+  for(uint8_t i = 0; i < EVENT_BUFFER_LENGTH; i++)
+  {
   	  event_state[i] = EVENT_WAIT;
     }
 
   while (1)
   {
-	  switch(event_state[event_index_read]){
+	  switch(event_state[event_index_read])
+	  {
 		case EVENT_WAIT:
 			controller.buttons.a = HAL_GPIO_ReadPin(BUTTON0_GPIO_Port, BUTTON0_Pin);
+
+			/* Joystick button using currently is not stable. Seems it is not connected properly:
+				with a pull-up resistor there it is always set, with no resistor sometimes works good,
+				sometimes no.
+
+			  controller.buttons.x = HAL_GPIO_ReadPin(JYSTK_BTTN_GPIO_Port, JYSTK_BTTN_Pin);
+			*/
+
 			break;
 		case TIM_EVENT_1:
 			HAL_ADC_Start_DMA(&hadc, (uint32_t *)adc_buffer, 2); //Trigger Joystick ADC read
+
+			// put new ADC values into corresponding filtersInstances
+			MeanFilterPutNewData(&meanFilterInstanceXAxis, adc_buffer[0]);
+			MeanFilterPutNewData(&meanFilterInstanceYAxis, adc_buffer[1]);
+
+			// calculate first filter value
+			MeanFilterCalculateFilteredValue(&meanFilterInstanceXAxis);
+			MeanFilterCalculateFilteredValue(&meanFilterInstanceYAxis);
+
+			// put the value from the first
+			AverageWeightedFilterPutNewData(&avgFilterInstanceXAxis, meanFilterInstanceXAxis.FilteredValue);
+			AverageWeightedFilterPutNewData(&avgFilterInstanceYAxis, meanFilterInstanceYAxis.FilteredValue);
+
 			break;
 		case TIM_EVENT_2:
 			write_next_event_state(USB_EVENT_HID_GAMEPAD_UPDATE);
 			break;
 		case ADC_EVENT_UPDATE:
-			Joystick_Update(&joystick);
+			AverageWeighedFilterCalculateFilteredValue(&avgFilterInstanceXAxis);
+			AverageWeighedFilterCalculateFilteredValue(&avgFilterInstanceYAxis);
+
+			// if ADC data changes are too small we skip this step
+			uint8_t isJoystickDataChangesInTheRange = JoystickDataChangesInTheRange(&joystick);
+			if (isJoystickDataChangesInTheRange != 0)
+			{
+				Joystick_Update(&joystick);
+			}
+
 			uint8_t invert_x = 1;
 			uint8_t invert_y = 0;
-			float deadzone_x = 0.05f;
-			float deadzone_y = 0.05f;
+			float deadzone_x = JOYSTICK_DEADZONE;
+			float deadzone_y = JOYSTICK_DEADZONE;
 			float val_x = invert_x ? -joystick.x.val : joystick.x.val;
 			float val_y = invert_y ? -joystick.y.val : joystick.y.val;
 			controller.joysticks._bits[0] = 0;
 			controller.joysticks._bits[1] = 0;
-			if((val_x > deadzone_x) || (val_x < -deadzone_x)){
+			if((val_x > deadzone_x) || (val_x < -deadzone_x))
+			{
 				controller.joysticks._bits[1] += (int16_t)(val_x * -(float)INT16_MAX);
 			}
-			if((val_y > deadzone_y) || (val_y < -deadzone_y)){
+			if((val_y > deadzone_y) || (val_y < -deadzone_y))
+			{
 				controller.joysticks._bits[0] += (int16_t)(val_y * (float)INT16_MAX);
 			}
 			hid_output_data.report_id = 1;
@@ -207,7 +250,8 @@ int main(void)
 			USBD_HID_ReportIn(&_gmk_controller_if, &hid_output_data, sizeof(hid_output_data));
 			break;
 	}
-	if(event_index_read != event_index_write){
+	if(event_index_read != event_index_write)
+	{
 		event_index_read = (event_index_read + 1) % EVENT_BUFFER_LENGTH;
 	}
 	else
@@ -373,7 +417,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_ACTIVE;
-  sConfigOC.Pulse = 16-1;
+  sConfigOC.Pulse = 1-1;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -459,6 +503,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUTTON0_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : JYSTK_BTTN_Pin */
+  GPIO_InitStruct.Pin = JYSTK_BTTN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(JYSTK_BTTN_GPIO_Port, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
@@ -468,7 +518,8 @@ void write_next_event_state(State_TypeDef next_state){
 	event_state[event_index_write] = next_state;
 }
 
-void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim){
+void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
+{
 	switch(htim->Channel){
 		case HAL_TIM_ACTIVE_CHANNEL_1:
 			write_next_event_state(TIM_EVENT_1);
@@ -481,8 +532,18 @@ void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim){
 	}
 }
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
 	write_next_event_state(ADC_EVENT_UPDATE);
+}
+
+void DataFiltersInitialization()
+{
+	AverageWeightedFilterInit(&avgFilterInstanceXAxis,  AVERAGE_WEIGHTED_FILTER_WINDOW_SIZE);
+	AverageWeightedFilterInit(&avgFilterInstanceYAxis, AVERAGE_WEIGHTED_FILTER_WINDOW_SIZE);
+
+	MeanFilterInit(&meanFilterInstanceXAxis, MEAN_FILTER_WINDOW_SIZE);
+	MeanFilterInit(&meanFilterInstanceYAxis, MEAN_FILTER_WINDOW_SIZE);
 }
 
 /* USER CODE END 4 */

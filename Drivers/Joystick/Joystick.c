@@ -47,25 +47,34 @@ void Joystick_Calibrate(Joystick_HandleTypeDef *js, uint16_t iters, float weight
 	js->calibrate.flag = 1;
 	js->calibrate.weight = weight;
 }
+
 /**
   * @brief  Updated the Joystick parameters using the adc buffer.
   *
   * @param  Joystick handle
   * @retval None
   */
-void Joystick_Update(Joystick_HandleTypeDef *js){
+void Joystick_Update(Joystick_HandleTypeDef *js)
+{
 	uint16_t x = *(js->x.adc);
 	uint16_t y = *(js->y.adc);
+
+	// save new ADC values as a previous to check in the future are there any
+	// changes or not
+	js->x.previousAdcValue = x;
+	js->y.previousAdcValue = y;
 
 	float x_val, x_sign;
 	float y_val, y_sign;
 
-	if(js->calibrate.flag && js->calibrate.iters > 0){
+	if(js->calibrate.flag && js->calibrate.iters > 0)
+	{
 		js->x.offset = (uint16_t)((float)js->x.offset * (1 - js->calibrate.weight) + (float)x * js->calibrate.weight);
 		js->y.offset = (uint16_t)((float)js->y.offset * (1 - js->calibrate.weight) + (float)y * js->calibrate.weight);
 		js->calibrate.iters--;
 	}
-	else if(js->calibrate.flag){
+	else if(js->calibrate.flag)
+	{
 		js->calibrate.flag = 0;
 	}
 
@@ -86,4 +95,51 @@ void Joystick_Update(Joystick_HandleTypeDef *js){
 
 	js->x.val = (x_sign > js->x.deadzone && x_sign < js->x.alivezone) ? x_val : 0;
 	js->y.val = (y_sign > js->y.deadzone && y_sign < js->y.alivezone) ? y_val : 0;
+}
+
+/**
+  * @brief  Check joystick adc value changes
+  *
+  * @param  Joystick handle
+  * @retval 0 - not updated, not 0 - not updated
+  */
+uint8_t JoystickDataChangesInTheRange(Joystick_HandleTypeDef *js)
+{
+	// default value - no changes (false)
+	uint8_t result = 0;
+
+	uint16_t x = *(js->x.adc);
+	uint16_t y = *(js->y.adc);
+
+	uint16_t previousX = js->x.previousAdcValue;
+	uint16_t previousY = js->y.previousAdcValue;
+
+	uint16_t xDifference = 0;
+	uint16_t yDifference = 0;
+
+	if (x > previousX)
+	{
+		xDifference = x - previousX;
+	}
+	else
+	{
+		xDifference = previousX - x;
+	}
+
+	if (y > previousY)
+	{
+		yDifference = y - previousY;
+	}
+	else
+	{
+		yDifference = previousY - y;
+	}
+
+	if (xDifference > JOYSTICK_MINIMAL_AXIS_CHANGE ||
+		yDifference > JOYSTICK_MINIMAL_AXIS_CHANGE	)
+	{
+		result = 1;
+	}
+
+	return result;
 }

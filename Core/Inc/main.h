@@ -34,13 +34,19 @@ extern "C" {
 
 #include "Joystick.h"
 #include "Controller.h"
+#include "AverageWeightedFilter.h"
+#include "MeanFilter.h"
+
+#include "usb_device.h"
+#include "usbd_hid.h"
 
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
-typedef enum {
+typedef enum
+{
 	EVENT_WAIT,
 	TIM_EVENT_1,
 	TIM_EVENT_2,
@@ -70,10 +76,14 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define BUTTON0_Pin GPIO_PIN_2
 #define BUTTON0_GPIO_Port GPIOA
+#define JYSTK_BTTN_Pin GPIO_PIN_3
+#define JYSTK_BTTN_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
-#define EVENT_BUFFER_LENGTH 128
+#define EVENT_BUFFER_LENGTH 140
+#define AVERAGE_WEIGHTED_FILTER_WINDOW_SIZE 16
+#define MEAN_FILTER_WINDOW_SIZE 4
 
 /* USER CODE END Private defines */
 

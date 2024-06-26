@@ -29,6 +29,7 @@ typedef struct {
 			uint8_t y : 1;
 		};
 		uint16_t _bits;
+		uint16_t previousBitValue;
 	} buttons;
 	union {
 		struct {

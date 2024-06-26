@@ -75,7 +75,7 @@ void UsbDevice_Init(void)
 
 void UsbDevice_DeInit(void)
 {
-	USBD_DeInit(UsbDevice);
+	USBD_Deinit(UsbDevice);
 }
 
 static void Get_SerialNum(uint8_t* pbuf)
