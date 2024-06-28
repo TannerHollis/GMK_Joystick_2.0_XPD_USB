@@ -1,0 +1,8 @@
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:72:20:USBD_EpAddr2Ref	2
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_private.h:161:20:USBD_IfClass_InData	2
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_private.h:173:20:USBD_IfClass_OutData	2
+../Drivers/USBDevice-master/Device/usbd_ep.c:39:17:USBD_EpSend	3
+../Drivers/USBDevice-master/Device/usbd_ep.c:66:17:USBD_EpReceive	3
+../Drivers/USBDevice-master/Device/usbd_ep.c:96:6:USBD_EpInCallback	2
+../Drivers/USBDevice-master/Device/usbd_ep.c:115:6:USBD_EpOutCallback	2
+../Drivers/USBDevice-master/Device/usbd_ep.c:139:17:USBD_EpRequest	14

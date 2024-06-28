@@ -1,0 +1,15 @@
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:72:20:USBD_EpAddr2Ref	2
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:101:20:USBD_EpOpen	1
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:115:20:USBD_EpClose	1
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:200:17:cdc_getDesc	3
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:259:20:cdc_getString	1
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:269:13:cdc_init	3
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:304:13:cdc_deinit	4
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:337:24:cdc_setupStage	6
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:408:13:cdc_dataStage	3
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:426:13:cdc_outData	2
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:437:13:cdc_inData	6
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:481:17:USBD_CDC_MountInterface	3
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:538:17:USBD_CDC_Transmit	1
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:550:17:USBD_CDC_Receive	1
+../Drivers/USBDevice-master/Class/CDC/usbd_cdc.c:562:17:USBD_CDC_Notify	2

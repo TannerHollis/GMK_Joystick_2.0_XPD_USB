@@ -1,3 +1,5 @@
+"./Core/Src/AverageWeightedFilter.o"
+"./Core/Src/MeanFilter.o"
 "./Core/Src/gmk_controller_if.o"
 "./Core/Src/hal_usb.o"
 "./Core/Src/main.o"

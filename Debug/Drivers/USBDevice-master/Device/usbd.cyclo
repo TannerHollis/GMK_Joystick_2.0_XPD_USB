@@ -1,0 +1,15 @@
+../Drivers/USBDevice-master/Device/usbd.c:37:6:USBD_Init	1
+../Drivers/USBDevice-master/Device/usbd.c:61:6:USBD_Deinit	1
+../Drivers/USBDevice-master/Device/usbd.c:73:6:USBD_UnmountInterfaces	2
+../Drivers/USBDevice-master/Device/usbd.c:94:6:USBD_Connect	1
+../Drivers/USBDevice-master/Device/usbd.c:104:6:USBD_Disconnect	1
+../Drivers/USBDevice-master/Device/usbd.c:118:17:USBD_SetRemoteWakeup	2
+../Drivers/USBDevice-master/Device/usbd.c:139:17:USBD_ClearRemoteWakeup	2
+../Drivers/USBDevice-master/Device/usbd.c:159:6:USBD_ResetCallback	1
+../Drivers/USBDevice-master/Device/usbd.c:213:24:USBD_SetAddress	4
+../Drivers/USBDevice-master/Device/usbd.c:237:24:USBD_SetConfig	2
+../Drivers/USBDevice-master/Device/usbd.c:256:24:USBD_GetConfig	1
+../Drivers/USBDevice-master/Device/usbd.c:267:24:USBD_GetStatus	1
+../Drivers/USBDevice-master/Device/usbd.c:279:24:USBD_SetFeature	2
+../Drivers/USBDevice-master/Device/usbd.c:297:24:USBD_ClearFeature	2
+../Drivers/USBDevice-master/Device/usbd.c:315:17:USBD_DevRequest	9

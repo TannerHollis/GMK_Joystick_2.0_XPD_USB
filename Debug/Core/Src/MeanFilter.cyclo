@@ -1,0 +1,4 @@
+../Core/Src/MeanFilter.c:21:6:MeanFilterInit	3
+../Core/Src/MeanFilter.c:47:6:MeanFilterDeinit	2
+../Core/Src/MeanFilter.c:63:6:MeanFilterCalculateFilteredValue	3
+../Core/Src/MeanFilter.c:88:6:MeanFilterPutNewData	2

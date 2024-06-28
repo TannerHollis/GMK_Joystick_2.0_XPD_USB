@@ -1,0 +1,8 @@
+../Drivers/ButtonSwitch/ButtonSwitch.c:24:28:ButtonSwitch_Init	1
+../Drivers/ButtonSwitch/ButtonSwitch.c:47:6:ButtonSwitch_SetDebounce	1
+../Drivers/ButtonSwitch/ButtonSwitch.c:57:6:ButtonSwitch_SetLongPress	1
+../Drivers/ButtonSwitch/ButtonSwitch.c:67:6:ButtonSwitch_SetUpdateFreq	1
+../Drivers/ButtonSwitch/ButtonSwitch.c:80:15:ButtonSwitch_GetPinState	1
+../Drivers/ButtonSwitch/ButtonSwitch.c:91:6:ButtonSwitch_Update	10
+../Drivers/ButtonSwitch/ButtonSwitch.c:130:9:ButtonSwitch_GetLongPress	2
+../Drivers/ButtonSwitch/ButtonSwitch.c:147:9:ButtonSwitch_GetShortPress	2

@@ -1,0 +1,13 @@
+../Core/Src/main.c:115:5:main	15
+../Core/Src/main.c:270:6:SystemClock_Config	3
+../Core/Src/main.c:315:13:MX_ADC_Init	4
+../Core/Src/main.c:379:13:MX_TIM2_Init	4
+../Core/Src/main.c:424:13:MX_TIM3_Init	4
+../Core/Src/main.c:469:13:MX_USB_PCD_Init	2
+../Core/Src/main.c:498:13:MX_DMA_Init	1
+../Core/Src/main.c:516:13:MX_GPIO_Init	1
+../Core/Src/main.c:544:6:write_next_event_state	1
+../Core/Src/main.c:549:6:HAL_TIM_PeriodElapsedCallback	3
+../Core/Src/main.c:561:6:HAL_ADC_ConvCpltCallback	1
+../Core/Src/main.c:566:6:DataFiltersInitialization	1
+../Core/Src/main.c:581:6:Error_Handler	1

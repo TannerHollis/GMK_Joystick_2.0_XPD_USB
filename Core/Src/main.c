@@ -548,27 +548,13 @@ void write_next_event_state(State_TypeDef next_state){
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	if(htim == htim2) // If event is output packet event
+	if(htim == &htim2) // If event is output packet event
 	{
 		write_next_event_state(TIM_EVENT_GAMEPAD_UPDATE);
 	}
-	else if(htim == htim3) // If event is ADC sample
+	else if(htim == &htim3) // If event is ADC sample
 	{
 		write_next_event_state(TIM_EVENT_START_ADC);
-	}
-}
-
-void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
-{
-	switch(htim->Channel){
-		case HAL_TIM_ACTIVE_CHANNEL_1:
-			write_next_event_state(TIM_EVENT_1);
-			break;
-		case HAL_TIM_ACTIVE_CHANNEL_2:
-			write_next_event_state(TIM_EVENT_2);
-			break;
-		default:
-			break;
 	}
 }
 

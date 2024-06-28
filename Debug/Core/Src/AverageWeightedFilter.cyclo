@@ -1,0 +1,4 @@
+../Core/Src/AverageWeightedFilter.c:22:6:AverageWeightedFilterInit	9
+../Core/Src/AverageWeightedFilter.c:85:6:AverageWeightedFilterDeinit	2
+../Core/Src/AverageWeightedFilter.c:102:6:AverageWeighedFilterCalculateFilteredValue	3
+../Core/Src/AverageWeightedFilter.c:131:6:AverageWeightedFilterPutNewData	2

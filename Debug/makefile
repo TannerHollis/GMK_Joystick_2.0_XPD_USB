@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (10.3-2021.10)
+# Toolchain: GNU Tools for STM32 (12.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -68,8 +68,8 @@ all: main-build
 main-build: GMK_Joystick_2.0_XPD_USB.elf secondary-outputs
 
 # Tool invocations
-GMK_Joystick_2.0_XPD_USB.elf GMK_Joystick_2.0_XPD_USB.map: $(OBJS) $(USER_OBJS) C:\Users\tanne\STM32CubeIDE\workspace_1.11.0\GMK_Joystick_2.0_XPD_USB\STM32L151C8TXA_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "GMK_Joystick_2.0_XPD_USB.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\tanne\STM32CubeIDE\workspace_1.11.0\GMK_Joystick_2.0_XPD_USB\STM32L151C8TXA_FLASH.ld" --specs=nosys.specs -Wl,-Map="GMK_Joystick_2.0_XPD_USB.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+GMK_Joystick_2.0_XPD_USB.elf GMK_Joystick_2.0_XPD_USB.map: $(OBJS) $(USER_OBJS) C:\Users\tanne\OneDrive\Documents\GitHub\GMK_Joystick_2.0_XPD_USB\STM32L151C8TXA_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "GMK_Joystick_2.0_XPD_USB.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\tanne\OneDrive\Documents\GitHub\GMK_Joystick_2.0_XPD_USB\STM32L151C8TXA_FLASH.ld" --specs=nosys.specs -Wl,-Map="GMK_Joystick_2.0_XPD_USB.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
