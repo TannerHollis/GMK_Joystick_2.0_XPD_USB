@@ -1,0 +1,9 @@
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_private.h:149:20:USBD_IfClass_DataStage	2
+../Drivers/USBDevice-master/Device/usbd_ctrl.c:34:13:USBD_CtrlSendError	1
+../Drivers/USBDevice-master/Device/usbd_ctrl.c:46:13:USBD_CtrlSendStatus	1
+../Drivers/USBDevice-master/Device/usbd_ctrl.c:56:13:USBD_CtrlReceiveStatus	1
+../Drivers/USBDevice-master/Device/usbd_ctrl.c:69:6:USBD_CtrlInCallback	9
+../Drivers/USBDevice-master/Device/usbd_ctrl.c:112:6:USBD_CtrlOutCallback	4
+../Drivers/USBDevice-master/Device/usbd_ctrl.c:142:17:USBD_CtrlSendData	4
+../Drivers/USBDevice-master/Device/usbd_ctrl.c:171:17:USBD_CtrlReceiveData	4
+../Drivers/USBDevice-master/Device/usbd_ctrl.c:204:6:USBD_SetupCallback	7

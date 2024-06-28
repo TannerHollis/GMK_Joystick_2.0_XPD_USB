@@ -1,0 +1,15 @@
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:72:20:USBD_EpAddr2Ref	2
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:101:20:USBD_EpOpen	1
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:115:20:USBD_EpClose	1
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:139:20:USBD_EpSetStall	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:103:17:msc_getDesc	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:138:20:msc_getString	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:148:13:msc_receiveCBW	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:160:13:msc_sendCSW	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:172:13:msc_init	3
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:210:13:msc_deinit	3
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:236:24:msc_setupStage	4
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:274:13:msc_inData	6
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:316:13:msc_outData	15
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:417:24:MSC_GetLU	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc.c:436:17:USBD_MSC_MountInterface	2

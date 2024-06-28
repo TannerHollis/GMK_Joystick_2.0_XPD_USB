@@ -1,0 +1,12 @@
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:72:20:USBD_EpAddr2Ref	2
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:101:20:USBD_EpOpen	1
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_internal.h:115:20:USBD_EpClose	1
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:167:17:hid_getDesc	1
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:226:20:hid_getString	1
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:270:13:hid_init	3
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:317:13:hid_deinit	2
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:339:24:hid_setupStage	16
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:473:13:hid_dataStage	3
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:491:13:hid_inData	2
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:524:17:USBD_HID_MountInterface	3
+../Drivers/USBDevice-master/Class/HID/usbd_hid.c:581:17:USBD_HID_ReportIn	4

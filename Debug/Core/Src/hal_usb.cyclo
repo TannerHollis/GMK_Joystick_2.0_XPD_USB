@@ -1,0 +1,6 @@
+../Core/Src/hal_usb.c:28:6:USB_FS_MspInit	1
+../Core/Src/hal_usb.c:51:6:USB_FS_MspDeInit	1
+../Core/Src/hal_usb.c:64:6:HAL_USBD_Setup	1
+../Core/Src/hal_usb.c:71:6:USB_IRQHandler	1
+../Core/Src/hal_usb.c:78:6:USB_HP_IRQHandler	1
+../Core/Src/hal_usb.c:85:6:USB_LP_IRQHandler	1

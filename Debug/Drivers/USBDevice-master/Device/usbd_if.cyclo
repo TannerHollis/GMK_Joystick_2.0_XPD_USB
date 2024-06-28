@@ -1,0 +1,7 @@
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_private.h:98:27:USBD_IfClass_GetString	2
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_private.h:112:20:USBD_IfClass_Init	2
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_private.h:123:20:USBD_IfClass_Deinit	2
+C:/Users/tanne/OneDrive/Documents/GitHub/GMK_Joystick_2.0_XPD_USB/Drivers/USBDevice-master/Include/private/usbd_private.h:135:31:USBD_IfClass_SetupStage	2
+../Drivers/USBDevice-master/Device/usbd_if.c:35:6:USBD_IfConfig	6
+../Drivers/USBDevice-master/Device/usbd_if.c:76:13:USBD_IfString	2
+../Drivers/USBDevice-master/Device/usbd_if.c:101:17:USBD_IfRequest	7

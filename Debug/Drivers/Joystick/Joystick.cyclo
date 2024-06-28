@@ -1,0 +1,3 @@
+../Drivers/Joystick/Joystick.c:17:24:Joystick_Init	1
+../Drivers/Joystick/Joystick.c:44:6:Joystick_Calibrate	1
+../Drivers/Joystick/Joystick.c:56:6:Joystick_Update	12

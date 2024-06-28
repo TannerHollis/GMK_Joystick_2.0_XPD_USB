@@ -1,0 +1,17 @@
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:36:29:SCSI_GetSenseCode	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:47:6:SCSI_PutSenseCode	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:62:17:SCSI_ProcessRead	4
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:106:17:SCSI_ProcessWrite	4
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:147:17:SCSI_Inquiry	3
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:183:17:SCSI_ReadCapacity10	2
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:221:17:SCSI_ReadFormatCapacity	2
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:266:17:SCSI_ModeSense6	2
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:300:17:SCSI_ModeSense10	2
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:336:17:SCSI_RequestSense	3
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:381:17:SCSI_StartStopUnit	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:408:17:SCSI_PreventAllowMediumRemoval	1
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:433:17:SCSI_TestUnitReady	3
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:467:17:SCSI_Verify10	3
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:507:17:SCSI_Read10	5
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:572:17:SCSI_Write10	7
+../Drivers/USBDevice-master/Class/MSC/usbd_msc_scsi.c:647:6:SCSI_ProcessCommand	17
