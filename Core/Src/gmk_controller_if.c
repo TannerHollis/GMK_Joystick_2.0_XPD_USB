@@ -55,7 +55,7 @@ static const USBD_HID_ReportConfigType gmk_controller_hid_report =
 		.MaxId = 1,
 		.Input =
 		{
-			.Interval_ms = 1,
+			.Interval_ms = 8,
 			.MaxSize = 13,
 		},
 		.Feature =
