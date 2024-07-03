@@ -34,8 +34,9 @@ extern "C" {
 
 #include "Joystick.h"
 #include "Controller.h"
-#include "AverageWeightedFilter.h"
+
 #include "MeanFilter.h"
+#include "SavitskiyGolayFilter.h"
 
 #include "usb_device.h"
 #include "usbd_hid.h"
@@ -82,8 +83,8 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 #define EVENT_BUFFER_LENGTH 140
-#define AVERAGE_WEIGHTED_FILTER_WINDOW_SIZE 16
 #define MEAN_FILTER_WINDOW_SIZE 4
+#define SAVITSKIYGOLAY_FILTER_WINDOW_SIZE 11
 
 /* USER CODE END Private defines */
 

@@ -70,11 +70,12 @@ uint16_t adc_buffer[2];
 
 Joystick_HandleTypeDef joystick;
 Controller_HandleTypeDef controller;
-AverageWeightedFilter_TypeDef avgFilterInstanceXAxis;
-AverageWeightedFilter_TypeDef avgFilterInstanceYAxis;
 
 MeanFilter_TypeDef meanFilterInstanceXAxis;
 MeanFilter_TypeDef meanFilterInstanceYAxis;
+
+SavitskiyGolayFilter_TypeDef filterInstanceXAxis;
+SavitskiyGolayFilter_TypeDef filterInstanceYAxis;
 
 static struct {
 	uint8_t report_id;
@@ -150,12 +151,12 @@ int main(void)
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_2);
 
-  AverageWeightedFilter_TypeDef* pointerFilterInstanceAxisX = &avgFilterInstanceXAxis;
-  AverageWeightedFilter_TypeDef* pointerFilterInstanceAxisY = &avgFilterInstanceYAxis;
+  SavitskiyGolayFilter_TypeDef* pointerFilterInstanceAxisX_ = &filterInstanceXAxis;
+  SavitskiyGolayFilter_TypeDef* pointerFilterInstanceAxisY_ = &filterInstanceYAxis;
 
   joystick = Joystick_Init(
-		  &pointerFilterInstanceAxisX->FilteredValue,
-		  &pointerFilterInstanceAxisY->FilteredValue);
+		  &pointerFilterInstanceAxisX_->FilteredValue,
+		  &pointerFilterInstanceAxisY_->FilteredValue);
 
   failed_tx = 0;
   failed_tx_max = 0;
@@ -169,7 +170,7 @@ int main(void)
   for(uint8_t i = 0; i < EVENT_BUFFER_LENGTH; i++)
   {
   	  event_state[i] = EVENT_WAIT;
-    }
+  }
 
   while (1)
   {
@@ -198,16 +199,16 @@ int main(void)
 			MeanFilterCalculateFilteredValue(&meanFilterInstanceYAxis);
 
 			// put the value from the first
-			AverageWeightedFilterPutNewData(&avgFilterInstanceXAxis, meanFilterInstanceXAxis.FilteredValue);
-			AverageWeightedFilterPutNewData(&avgFilterInstanceYAxis, meanFilterInstanceYAxis.FilteredValue);
+			SavitskiyGolayFilterPutNewData(&filterInstanceXAxis, meanFilterInstanceXAxis.FilteredValue);
+			SavitskiyGolayFilterPutNewData(&filterInstanceYAxis, meanFilterInstanceYAxis.FilteredValue);
 
 			break;
 		case TIM_EVENT_2:
 			write_next_event_state(USB_EVENT_HID_GAMEPAD_UPDATE);
 			break;
 		case ADC_EVENT_UPDATE:
-			AverageWeighedFilterCalculateFilteredValue(&avgFilterInstanceXAxis);
-			AverageWeighedFilterCalculateFilteredValue(&avgFilterInstanceYAxis);
+			SavitskiyGolayFilterCalculateFilteredValue(&filterInstanceXAxis);
+			SavitskiyGolayFilterCalculateFilteredValue(&filterInstanceYAxis);
 
 			// if ADC data changes are too small we skip this step
 			uint8_t isJoystickDataChangesInTheRange = JoystickDataChangesInTheRange(&joystick);
@@ -539,11 +540,12 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 void DataFiltersInitialization()
 {
-	AverageWeightedFilterInit(&avgFilterInstanceXAxis,  AVERAGE_WEIGHTED_FILTER_WINDOW_SIZE);
-	AverageWeightedFilterInit(&avgFilterInstanceYAxis, AVERAGE_WEIGHTED_FILTER_WINDOW_SIZE);
-
 	MeanFilterInit(&meanFilterInstanceXAxis, MEAN_FILTER_WINDOW_SIZE);
 	MeanFilterInit(&meanFilterInstanceYAxis, MEAN_FILTER_WINDOW_SIZE);
+
+	SavitskiyGolayFilterInit(&filterInstanceXAxis, SAVITSKIYGOLAY_FILTER_WINDOW_SIZE);
+	SavitskiyGolayFilterInit(&filterInstanceYAxis, SAVITSKIYGOLAY_FILTER_WINDOW_SIZE);
+
 }
 
 /* USER CODE END 4 */

@@ -63,7 +63,7 @@ void AverageWeightedFilterInit(AverageWeightedFilter_TypeDef *filterInstance,
 
 		if (coeff < 0)
 		{
-			coeff = MINIMAL_DATA_WEIGHT;
+			coeff = AVERAGE_WEIGHTED_FILTER_MINIMAL_DATA_WEIGHT;
 		}
 
 		filterInstance->InputData[i] = 0;

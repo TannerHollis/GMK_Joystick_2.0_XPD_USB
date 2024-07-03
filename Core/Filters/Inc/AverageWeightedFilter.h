@@ -19,14 +19,15 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define MINIMAL_DATA_WEIGHT 0.05
+#define AVERAGE_WEIGHTED_FILTER_MINIMAL_DATA_WEIGHT 0.05
 
 typedef struct
 {
 	uint16_t FilterWindowSize;
 	uint16_t NextDataIndex;
 	uint16_t* InputData;
-	double* WeightCoefficients;
+	int* WeightCoefficients;
+	int WeightDivider;
 	uint16_t FilteredValue;
 } AverageWeightedFilter_TypeDef;
 
