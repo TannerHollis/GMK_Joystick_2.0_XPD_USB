@@ -19,6 +19,7 @@
 
 typedef struct
 {
+	uint16_t DataArrayLength;
 	uint16_t FilterWindowSize;
 	uint16_t NextDataIndex;
 	uint16_t* InputData;

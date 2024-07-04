@@ -27,6 +27,7 @@ void SavitskiyGolayFilterInit(SavitskiyGolayFilter_TypeDef *filterInstance,
 
 	filterInstance->NextDataIndex = 0;
 	filterInstance->FilteredValue = 0;
+	filterInstance->DataArrayLength = 0;
 
 	if (filterWindowSize % 2 == 0)
 	{
@@ -285,4 +286,9 @@ void SavitskiyGolayFilterPutNewData(
 	filterInstance->InputData[dataIndex] = newValue;
 
 	filterInstance->NextDataIndex = (dataIndex + 1) % filterWindowSize;
+
+	if (filterInstance->DataArrayLength < filterWindowSize)
+	{
+		filterInstance->DataArrayLength++;
+	}
 }

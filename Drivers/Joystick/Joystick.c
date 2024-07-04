@@ -14,20 +14,23 @@
 
 #include <joystick.h>
 
-Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer){
+Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer)
+{
 	Joystick_HandleTypeDef js;
 
 	js.x.adc = x_buffer;
+	js.x.previousAdcValue = 0;
 	js.x.min = UINT16_MAX;
-	js.x.offset = 2048;
+	js.x.offset = JOYSTICK_HALF_ADC_RANGE_VALUE;
 	js.x.max = 0;
 	js.x.deadzone = JOYSTICK_DEADZONE;
 	js.x.alivezone = JOYSTICK_ALIVEZONE;
 	js.x.val = 0;
 
 	js.y.adc = y_buffer;
+	js.y.previousAdcValue = 0;
 	js.y.min = UINT16_MAX;
-	js.y.offset = 2048;
+	js.y.offset = JOYSTICK_HALF_ADC_RANGE_VALUE;
 	js.y.max = 0;
 	js.y.deadzone = JOYSTICK_DEADZONE;
 	js.y.alivezone = JOYSTICK_ALIVEZONE;
@@ -41,7 +44,8 @@ Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer){
 	return(js);
 }
 
-void Joystick_Calibrate(Joystick_HandleTypeDef *js, uint16_t iters, float weight){
+void Joystick_Calibrate(Joystick_HandleTypeDef *js, uint16_t iters, float weight)
+{
 	js->calibrate.iters_max = iters;
 	js->calibrate.iters = iters;
 	js->calibrate.flag = 1;
@@ -135,8 +139,8 @@ uint8_t JoystickDataChangesInTheRange(Joystick_HandleTypeDef *js)
 		yDifference = previousY - y;
 	}
 
-	if (xDifference > JOYSTICK_MINIMAL_AXIS_CHANGE ||
-		yDifference > JOYSTICK_MINIMAL_AXIS_CHANGE	)
+	if (xDifference > JOYSTICK_MINIMAL_AXIS_ADC_CHANGE ||
+		yDifference > JOYSTICK_MINIMAL_AXIS_ADC_CHANGE	)
 	{
 		result = 1;
 	}

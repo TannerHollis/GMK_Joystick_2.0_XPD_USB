@@ -71,9 +71,6 @@ uint16_t adc_buffer[2];
 Joystick_HandleTypeDef joystick;
 Controller_HandleTypeDef controller;
 
-MeanFilter_TypeDef meanFilterInstanceXAxis;
-MeanFilter_TypeDef meanFilterInstanceYAxis;
-
 SavitskiyGolayFilter_TypeDef filterInstanceXAxis;
 SavitskiyGolayFilter_TypeDef filterInstanceYAxis;
 
@@ -146,6 +143,8 @@ int main(void)
   HAL_USBD_Setup();
   UsbDevice_Init();
 
+  HAL_Delay(10); // small delay to avoid transitional state changes
+
   HAL_TIM_Base_Start(&htim2);
 
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
@@ -191,24 +190,25 @@ int main(void)
 			HAL_ADC_Start_DMA(&hadc, (uint32_t *)adc_buffer, 2); //Trigger Joystick ADC read
 
 			// put new ADC values into corresponding filtersInstances
-			MeanFilterPutNewData(&meanFilterInstanceXAxis, adc_buffer[0]);
-			MeanFilterPutNewData(&meanFilterInstanceYAxis, adc_buffer[1]);
-
-			// calculate first filter value
-			MeanFilterCalculateFilteredValue(&meanFilterInstanceXAxis);
-			MeanFilterCalculateFilteredValue(&meanFilterInstanceYAxis);
-
-			// put the value from the first
-			SavitskiyGolayFilterPutNewData(&filterInstanceXAxis, meanFilterInstanceXAxis.FilteredValue);
-			SavitskiyGolayFilterPutNewData(&filterInstanceYAxis, meanFilterInstanceYAxis.FilteredValue);
+			SavitskiyGolayFilterPutNewData(&filterInstanceXAxis, adc_buffer[0]);
+			SavitskiyGolayFilterPutNewData(&filterInstanceYAxis, adc_buffer[1]);
 
 			break;
 		case TIM_EVENT_2:
 			write_next_event_state(USB_EVENT_HID_GAMEPAD_UPDATE);
 			break;
 		case ADC_EVENT_UPDATE:
-			SavitskiyGolayFilterCalculateFilteredValue(&filterInstanceXAxis);
-			SavitskiyGolayFilterCalculateFilteredValue(&filterInstanceYAxis);
+			// calculate filtered value if the data array is enough
+
+			if (filterInstanceXAxis.DataArrayLength == filterInstanceXAxis.FilterWindowSize)
+			{
+				SavitskiyGolayFilterCalculateFilteredValue(&filterInstanceXAxis);
+			}
+
+			if (filterInstanceYAxis.DataArrayLength == filterInstanceXAxis.FilterWindowSize)
+			{
+				SavitskiyGolayFilterCalculateFilteredValue(&filterInstanceYAxis);
+			}
 
 			// if ADC data changes are too small we skip this step
 			uint8_t isJoystickDataChangesInTheRange = JoystickDataChangesInTheRange(&joystick);
@@ -540,12 +540,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 void DataFiltersInitialization()
 {
-	MeanFilterInit(&meanFilterInstanceXAxis, MEAN_FILTER_WINDOW_SIZE);
-	MeanFilterInit(&meanFilterInstanceYAxis, MEAN_FILTER_WINDOW_SIZE);
-
 	SavitskiyGolayFilterInit(&filterInstanceXAxis, SAVITSKIYGOLAY_FILTER_WINDOW_SIZE);
 	SavitskiyGolayFilterInit(&filterInstanceYAxis, SAVITSKIYGOLAY_FILTER_WINDOW_SIZE);
-
 }
 
 /* USER CODE END 4 */
