@@ -150,12 +150,12 @@ int main(void)
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_2);
 
-  SavitskiyGolayFilter_TypeDef* pointerFilterInstanceAxisX_ = &filterInstanceXAxis;
-  SavitskiyGolayFilter_TypeDef* pointerFilterInstanceAxisY_ = &filterInstanceYAxis;
+  SavitskiyGolayFilter_TypeDef* pointerFilterInstanceAxisX = &filterInstanceXAxis;
+  SavitskiyGolayFilter_TypeDef* pointerFilterInstanceAxisY = &filterInstanceYAxis;
 
   joystick = Joystick_Init(
-		  &pointerFilterInstanceAxisX_->FilteredValue,
-		  &pointerFilterInstanceAxisY_->FilteredValue);
+		  &pointerFilterInstanceAxisX->FilteredValue,
+		  &pointerFilterInstanceAxisY->FilteredValue);
 
   failed_tx = 0;
   failed_tx_max = 0;
