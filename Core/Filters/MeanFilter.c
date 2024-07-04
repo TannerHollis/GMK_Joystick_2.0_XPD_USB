@@ -100,4 +100,9 @@ void MeanFilterPutNewData(
 	filterInstance->InputData[dataIndex] = newValue;
 
 	filterInstance->NextDataIndex = (dataIndex + 1) % filterWindowSize;
+
+	if (filterInstance->DataArrayLength < filterWindowSize)
+	{
+		filterInstance->DataArrayLength++;
+	}
 }
