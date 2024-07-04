@@ -105,7 +105,7 @@ void Joystick_Update(Joystick_HandleTypeDef *js)
   * @brief  Check joystick adc value changes
   *
   * @param  Joystick handle
-  * @retval 0 - not updated, not 0 - not updated
+  * @retval 0 - not updated, not 0 - updated
   */
 uint8_t JoystickDataChangesInTheRange(Joystick_HandleTypeDef *js)
 {
