@@ -110,7 +110,10 @@ void AverageWeighedFilterCalculateFilteredValue(
 	double result = 0;
 
 	uint16_t filterWindowSize = filterInstance->FilterWindowSize;
+	uint16_t halfFilterWindowSize = filterWindowSize / 2;
 	int dataIndex = filterInstance->NextDataIndex;
+
+	dataIndex  = (filterWindowSize + dataIndex - halfFilterWindowSize) % filterWindowSize;
 
 	for (int i = 0; i<filterWindowSize; i++)
 	{
