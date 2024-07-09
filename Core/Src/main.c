@@ -71,8 +71,11 @@ uint16_t adc_buffer[2];
 Joystick_HandleTypeDef joystick;
 Controller_HandleTypeDef controller;
 
-SavitskiyGolayFilter_TypeDef filterInstanceXAxis;
-SavitskiyGolayFilter_TypeDef filterInstanceYAxis;
+AverageWeightedFilter_TypeDef avgFilterInstanceXAxis;
+AverageWeightedFilter_TypeDef avgFilterInstanceYAxis;
+
+MeanFilter_TypeDef meanFilterInstanceXAxis;
+MeanFilter_TypeDef meanFilterInstanceYAxis;
 
 static struct {
 	uint8_t report_id;
@@ -150,8 +153,8 @@ int main(void)
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
   HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_2);
 
-  SavitskiyGolayFilter_TypeDef* pointerFilterInstanceAxisX = &filterInstanceXAxis;
-  SavitskiyGolayFilter_TypeDef* pointerFilterInstanceAxisY = &filterInstanceYAxis;
+  AverageWeightedFilter_TypeDef* pointerFilterInstanceAxisX = &avgFilterInstanceXAxis;
+  AverageWeightedFilter_TypeDef* pointerFilterInstanceAxisY = &avgFilterInstanceYAxis;
 
   joystick = Joystick_Init(
 		  &pointerFilterInstanceAxisX->FilteredValue,
@@ -190,8 +193,24 @@ int main(void)
 			HAL_ADC_Start_DMA(&hadc, (uint32_t *)adc_buffer, 2); //Trigger Joystick ADC read
 
 			// put new ADC values into corresponding filtersInstances
-			SavitskiyGolayFilterPutNewData(&filterInstanceXAxis, adc_buffer[0]);
-			SavitskiyGolayFilterPutNewData(&filterInstanceYAxis, adc_buffer[1]);
+			MeanFilterPutNewData(&meanFilterInstanceXAxis, adc_buffer[0]);
+			MeanFilterPutNewData(&meanFilterInstanceYAxis, adc_buffer[1]);
+
+			// calculate first filter value
+			MeanFilterCalculateFilteredValue(&meanFilterInstanceXAxis);
+			MeanFilterCalculateFilteredValue(&meanFilterInstanceYAxis);
+
+			// put the value from the first if the previous filter window is full to have correct
+			// joystick axises limits detection
+			if (meanFilterInstanceXAxis.DataArrayLength == meanFilterInstanceXAxis.FilterWindowSize)
+			{
+				AverageWeightedFilterPutNewData(&avgFilterInstanceXAxis, meanFilterInstanceXAxis.FilteredValue);
+			}
+
+			if (meanFilterInstanceYAxis.DataArrayLength == meanFilterInstanceYAxis.FilterWindowSize)
+			{
+				AverageWeightedFilterPutNewData(&avgFilterInstanceYAxis, meanFilterInstanceYAxis.FilteredValue);
+			}
 
 			break;
 		case TIM_EVENT_2:
@@ -200,14 +219,14 @@ int main(void)
 		case ADC_EVENT_UPDATE:
 			// calculate filtered value if the data array is enough
 
-			if (filterInstanceXAxis.DataArrayLength == filterInstanceXAxis.FilterWindowSize)
+			if (avgFilterInstanceXAxis.DataArrayLength == avgFilterInstanceXAxis.FilterWindowSize)
 			{
-				SavitskiyGolayFilterCalculateFilteredValue(&filterInstanceXAxis);
+				AverageWeighedFilterCalculateFilteredValue(&avgFilterInstanceXAxis);
 			}
 
-			if (filterInstanceYAxis.DataArrayLength == filterInstanceXAxis.FilterWindowSize)
+			if (avgFilterInstanceYAxis.DataArrayLength == avgFilterInstanceXAxis.FilterWindowSize)
 			{
-				SavitskiyGolayFilterCalculateFilteredValue(&filterInstanceYAxis);
+				AverageWeighedFilterCalculateFilteredValue(&avgFilterInstanceYAxis);
 			}
 
 			// if ADC data changes are too small we skip this step
@@ -540,8 +559,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 void DataFiltersInitialization()
 {
-	SavitskiyGolayFilterInit(&filterInstanceXAxis, SAVITSKIYGOLAY_FILTER_WINDOW_SIZE);
-	SavitskiyGolayFilterInit(&filterInstanceYAxis, SAVITSKIYGOLAY_FILTER_WINDOW_SIZE);
+	AverageWeightedFilterInit(&avgFilterInstanceXAxis,  AVERAGE_WEIGHTED_FILTER_WINDOW_SIZE);
+	AverageWeightedFilterInit(&avgFilterInstanceYAxis, AVERAGE_WEIGHTED_FILTER_WINDOW_SIZE);
+
+	MeanFilterInit(&meanFilterInstanceXAxis, MEAN_FILTER_WINDOW_SIZE);
+	MeanFilterInit(&meanFilterInstanceYAxis, MEAN_FILTER_WINDOW_SIZE);
 }
 
 /* USER CODE END 4 */
