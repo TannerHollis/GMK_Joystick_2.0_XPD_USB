@@ -196,19 +196,21 @@ int main(void)
 			MeanFilterPutNewData(&meanFilterInstanceXAxis, adc_buffer[0]);
 			MeanFilterPutNewData(&meanFilterInstanceYAxis, adc_buffer[1]);
 
-			// calculate first filter value
-			MeanFilterCalculateFilteredValue(&meanFilterInstanceXAxis);
-			MeanFilterCalculateFilteredValue(&meanFilterInstanceYAxis);
-
-			// put the value from the first if the previous filter window is full to have correct
+			// put the value from the first filter chain if the previous filter window is full to have correct
 			// joystick axises limits detection
 			if (meanFilterInstanceXAxis.DataArrayLength == meanFilterInstanceXAxis.FilterWindowSize)
 			{
-				AverageWeightedFilterPutNewData(&avgFilterInstanceXAxis, meanFilterInstanceXAxis.FilteredValue);
+        // calculate first filter value and put to the second filter chain
+			  MeanFilterCalculateFilteredValue(&meanFilterInstanceXAxis);
+
+			  AverageWeightedFilterPutNewData(&avgFilterInstanceXAxis, meanFilterInstanceXAxis.FilteredValue);
 			}
 
 			if (meanFilterInstanceYAxis.DataArrayLength == meanFilterInstanceYAxis.FilterWindowSize)
 			{
+				// calculate first filter value and put to the second filter chain
+				MeanFilterCalculateFilteredValue(&meanFilterInstanceYAxis);
+
 				AverageWeightedFilterPutNewData(&avgFilterInstanceYAxis, meanFilterInstanceYAxis.FilteredValue);
 			}
 
