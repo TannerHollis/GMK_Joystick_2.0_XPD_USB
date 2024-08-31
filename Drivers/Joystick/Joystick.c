@@ -14,7 +14,8 @@
 
 #include <joystick.h>
 
-Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer){
+Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer, uint8_t flip_x, uint8_t flip_y)
+{
 	Joystick_HandleTypeDef js;
 
 	js.x.adc = x_buffer;
@@ -26,6 +27,7 @@ Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer){
 	js.x.val = 0;
 	js.x.filteredVal = 0;
 	js.x.vals = (float*)malloc(sizeof(float) * JOYSTICK_FILTER_SAMPLES);
+	js.x.invert = flip_x;
 
 	js.y.adc = y_buffer;
 	js.y.min = UINT16_MAX;
@@ -36,6 +38,7 @@ Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer){
 	js.y.val = 0;
 	js.y.filteredVal = 0;
 	js.y.vals = (float*)malloc(sizeof(float) * JOYSTICK_FILTER_SAMPLES);
+	js.y.invert = flip_y;
 
 	js.calibrate.iters_max = 0;
 	js.calibrate.iters = 0;
@@ -117,6 +120,6 @@ void Joystick_Update(Joystick_HandleTypeDef *js){
 
 	js->filtWrite = (js->filtWrite + 1) % JOYSTICK_FILTER_SAMPLES;
 
-	js->x.val = valSumX;
-	js->y.val = valSumY;
+	js->x.val = js->x.invert ? -valSumX : valSumX;
+	js->y.val = js->x.invert ? -valSumY : valSumY;
 }

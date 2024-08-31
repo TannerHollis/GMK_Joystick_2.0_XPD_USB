@@ -15,29 +15,23 @@
 #define JOYSTICK_FILTER_SAMPLES 5
 #define JOYSTICK_FILTER_ALPHA 0.8f
 
+typedef struct Joystick_AxisTypeDef
+{
+	uint16_t *adc;
+	uint16_t min;
+	uint16_t max;
+	uint16_t offset;
+	float deadzone;
+	float alivezone;
+	float val;
+	float filteredVal;
+	float* vals;
+	uint8_t invert;
+} Joystick_AxisTypeDef;
+
 typedef struct{
-	struct{
-		uint16_t *adc;
-		uint16_t min;
-		uint16_t max;
-		uint16_t offset;
-		float deadzone;
-		float alivezone;
-		float val;
-		float filteredVal;
-		float* vals;
-	} x;
-	struct{
-		uint16_t *adc;
-		uint16_t min;
-		uint16_t max;
-		uint16_t offset;
-		float deadzone;
-		float alivezone;
-		float val;
-		float filteredVal;
-		float* vals;
-	} y;
+	Joystick_AxisTypeDef x;
+	Joystick_AxisTypeDef y;
 	struct{
 		uint16_t iters_max;
 		uint16_t iters;
@@ -49,7 +43,7 @@ typedef struct{
 	float* filterCoeffs;
 } Joystick_HandleTypeDef;
 
-Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer);
+Joystick_HandleTypeDef Joystick_Init(uint16_t *x_buffer, uint16_t *y_buffer, uint8_t flip_x, uint8_t flip_y);
 void Joystick_Calibrate(Joystick_HandleTypeDef *js, uint16_t iters, float weight);
 void Joystick_Update(Joystick_HandleTypeDef *js);
 
